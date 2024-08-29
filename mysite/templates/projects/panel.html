@@ -1,0 +1,48 @@
+{% extends 'layouts/main.html' %}
+{% load static %}
+
+{% block title %}
+    - Panel
+{% endblock title %}
+
+{% block main %}
+<div class="container mt-4">
+    <h4 class="mb-4 text-center">Panel</h4>
+    <div id="response"></div>
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Sidebar placeholder -->
+            <div id="sidebarPlaceholder" class="d-flex flex-column align-items-start">
+                <div class="placeholder-glow mb-3">
+                    <span class="placeholder col-12"></span>
+                </div>
+                <div class="placeholder-glow mb-3">
+                    <span class="placeholder col-12"></span>
+                </div>
+                <div class="placeholder-glow">
+                    <span class="placeholder col-12"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div id="panelUser" class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">Info</h5>
+                </div>
+                <ul class="nav nav-tabs" id="panelTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="proyectosTab" data-bs-toggle="tab" data-bs-target="#proyectosContent" type="button" role="tab" aria-controls="proyectosContent" aria-selected="true">Proyectos</button>
+                    </li>
+                </ul>
+                <div class="tab-content p-3" id="contentPanel">
+                    <!-- Aquí se cargará el contenido dinámico con JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/panel.js' %}"></script>
+
+{% endblock main %}

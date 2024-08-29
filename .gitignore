@@ -1,0 +1,4 @@
+.venv/
+images/
+videos/
+db.sqlite3

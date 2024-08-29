@@ -1,0 +1,29 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}Editar Proyecto{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Editar Proyecto</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_title" class="form-label">Título del Proyecto</label>
+            {{ form.title }}
+        </div>
+        <div class="mb-3">
+            <label for="id_image_url" class="form-label">URL de la Imagen</label>
+            {{ form.image_url }}
+        </div>
+        <div class="mb-3">
+            <label for="id_image" class="form-label">Subir Imagen</label>
+            {{ form.image }}
+        </div>
+        <div class="mb-3">
+            <label for="id_description" class="form-label">Descripción</label>
+            {{ form.description }}
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Proyecto</button>
+    </form>
+</div>
+{% endblock %}
