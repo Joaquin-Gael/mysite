@@ -5,36 +5,64 @@
 {% block content %}
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 mb-4">
             {% if project.image %}
-            <img src="{{ project.image.url }}" class="img-fluid" alt="{{ project.title }}">
+            <img src="{{ project.image_url }}" class="img-fluid rounded shadow" alt="{{ project.title }}">
             {% elif project.image_url %}
-            <img src="{{ project.image_url }}" class="img-fluid" alt="{{ project.title }}">
+            <img src="{{ project.image_url }}" class="img-fluid rounded shadow" alt="{{ project.title }}">
             {% endif %}
         </div>
-        <div class="col-md-6">
-            <h1>{{ project.title }}</h1>
-            <h3>{{ project.subtitle }}</h3>
-            <p><strong>Descripción:</strong> {{ project.description }}</p>
-            <p><strong>Objetivo:</strong> {{ project.objective }}</p>
-            <p><strong>Metas:</strong> {{ project.goals }}</p>
-            <p><strong>Contenido:</strong> {{ project.content }}</p>
-            <p><strong>Profesores:</strong> {{ project.teachers }}</p>
-            <p><strong>Curso:</strong> {{ project.course }}</p>
-            <p><strong>Estudiantes:</strong> {{ project.students }}</p>
-            <p><strong>Materia:</strong> {{ project.subject }}</p>
+        <div class="col-md-6 mb-4">
+            <h1 class="display-4">{{ project.title }}</h1>
+            <h3 class="text-muted">{{ project.subtitle }}</h3>
+            <div class="mb-3">
+                <p><strong>Descripción:</strong></p>
+                <p>{{ project.description }}</p>
+            </div>
+            <div class="mb-3">
+                <p><strong>Objetivo:</strong></p>
+                <p>{{ project.objective }}</p>
+            </div>
+            <div class="mb-3">
+                <p><strong>Metas:</strong></p>
+                <p>{{ project.goals }}</p>
+            </div>
+            <div class="mb-3">
+                <p><strong>Contenido:</strong></p>
+                <p>{{ project.content }}</p>
+            </div>
+            <div class="mb-3">
+                <p><strong>Profesores:</strong></p>
+                <p>{{ project.teachers }}</p>
+            </div>
+            <div class="mb-3">
+                <p><strong>Curso:</strong></p>
+                <p>{{ project.course }}</p>
+            </div>
+            <div class="mb-3">
+                <p><strong>Estudiantes:</strong></p>
+                <p>{{ project.students }}</p>
+            </div>
+            <div class="mb-3">
+                <p><strong>Materia:</strong></p>
+                <p>{{ project.subject }}</p>
+            </div>
             {% if project.video %}
-            <video controls class="w-100">
-                <source src="{{ project.video.url }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+            <div class="mb-4">
+                <video controls class="w-100 rounded shadow">
+                    <source src="{{ project.video.url }}" type="video/mp4">
+                    Tu navegador no soporta la etiqueta de video.
+                </video>
+            </div>
             {% elif project.video_url %}
-            <video controls class="w-100">
-                <source src="{{ project.video_url }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+            <div class="mb-4">
+                <video controls class="w-100 rounded shadow">
+                    <source src="{{ project.video_url }}" type="video/mp4">
+                    Tu navegador no soporta la etiqueta de video.
+                </video>
+            </div>
             {% endif %}
-            <a href="{% url 'index' %}" class="btn btn-primary mt-3">Volver a la lista de proyectos</a>
+            <a href="{% url 'index' %}" class="btn btn-primary">Volver a la lista de proyectos</a>
         </div>
     </div>
 </div>

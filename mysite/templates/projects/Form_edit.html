@@ -1,0 +1,70 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}Editar Proyecto{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Editar Proyecto</h1>
+    <div class="card p-4 border-primary">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_title" class="form-label">Título del Proyecto</label>
+                    {{ form.title|default_if_none:"" }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_subtitle" class="form-label">Subtítulo del Proyecto</label>
+                    {{ form.subtitle|default_if_none:"" }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_image_url" class="form-label">URL de la Imagen</label>
+                    {{ form.image_url|default_if_none:"" }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_image" class="form-label">Subir Imagen</label>
+                    {{ form.image|default_if_none:"" }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_video_url" class="form-label">URL del Video</label>
+                    {{ form.video_url|default_if_none:"" }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_description" class="form-label">Descripción</label>
+                    {{ form.description|default_if_none:"" }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_objective" class="form-label">Objetivo</label>
+                    {{ form.objective|default_if_none:"" }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_goals" class="form-label">Metas</label>
+                    {{ form.goals|default_if_none:"" }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_content" class="form-label">Contenido</label>
+                    {{ form.content|default_if_none:"" }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_teachers" class="form-label">Profesores</label>
+                    {{ form.teachers|default_if_none:"" }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_course" class="form-label">Curso</label>
+                    {{ form.course|default_if_none:"" }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_students" class="form-label">Estudiantes</label>
+                    {{ form.students|default_if_none:"" }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_subject" class="form-label">Materia</label>
+                    {{ form.subject|default_if_none:"" }}
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Proyecto</button>
+                <a href="{% url 'index' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

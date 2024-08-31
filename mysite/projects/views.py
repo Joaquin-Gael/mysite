@@ -1,4 +1,5 @@
-#from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.views.generic.edit import DeleteView, UpdateView
 from django.contrib.auth import login
 from django.shortcuts import (render, redirect)
 from django.views import View
@@ -76,21 +77,6 @@ class CreateProject(View):
             print(err)
             return redirect('project_create')
 
-#def CreateProject(request):
-#    if request.method == 'POST':
-#        form = ProjectForm(request.POST, request.FILES)
-#        if form.is_valid():
-#            proyecto = form.save(commit=False)
-#            proyecto.userID = request.user 
-#            proyecto.save()
-#            messages.success(request, 'Proyecto creado exitosamente.')
-#            return redirect('projects/index.html')
-#        else:
-#            messages.error(request, 'Por favor, corrija los errores en el formulario.')
-#    else:
-#        form = ProjectForm()
-#        return render(request, 'projects/Form_create.html',{'form':form})
-
 class PanelUser(View):
     def get(self, request):
         #if not request.user.is_authenticated:
@@ -109,26 +95,26 @@ class PanelUser(View):
             'msg': f'{_json}'
         })
 
-class EditProject(View):
-    def get(self, request):
-        form = ProjectForm()
-        return render(request, 'projects/Form_edit.html', {'form': form})
+class EditProject(UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'projects/Form_edit.html'
+    context_object_name = 'form'
+    success_url = reverse_lazy('index')
 
-    def post(self, request):
-        form = forms.ProjectForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
-        return render(request, 'projects/Form_edit.html', {'form': form})
+    def form_valid(self, form):
+        # Aquí puedes realizar acciones adicionales si es necesario
+        return super().form_valid(form)
 
-class DeleteProject(View):
-    def get(self, request):
-        return render(request, 'projects/delete_project.html')
+class DeleteProject(DeleteView):
+    model = Project
+    success_url = reverse_lazy('index')
+    template_name = 'projects/project_confirm_delete.html'
 
-    def post(self, request, project_id):
-        project = Project.objects.get(id=project_id)
-        project.delete()
-        return redirect('index')
+    def get_object(self, queryset=None):
+        """ Devuelve el objeto que se eliminará. """
+        obj = super().get_object(queryset)
+        return obj
 
 class ProjectDetail(View):
     def get(self, request, project_id):

@@ -1,0 +1,30 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}Eliminar Proyecto{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading">¡Advertencia!</h4>
+        <p>Estás a punto de eliminar el proyecto <strong>"{{ object.title }}"</strong>. Esta acción es
+            <strong>irreversible</strong> y no podrás recuperar el proyecto una vez que se haya eliminado.</p>
+        <hr>
+        <p class="mb-0">Si estás seguro de que deseas proceder con la eliminación, haz clic en
+            <strong>Eliminar</strong>. De lo contrario, puedes cancelar la acción y volver a la página anterior.</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="card p-4 border-danger">
+        <h2 class="text-danger">Confirmar Eliminación</h2>
+        <p class="text-danger">¿Estás seguro de que deseas eliminar el proyecto <strong>"{{ object.title }}"</strong>?
+            Esta acción eliminará el proyecto permanentemente.</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+                <a href="{% url 'index' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
