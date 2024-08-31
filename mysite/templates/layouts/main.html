@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,18 +15,163 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <style>
-        main{
+        main {
             height: 100vh;
+        }
+
+        /* Fondo oscuro con estilo tecnológico */
+        .project-card {
+            background-color: #1a1a2e;
+            /* Color de fondo oscuro */
+            color: #e0e0e0;
+            /* Texto claro para contraste */
+            border: none;
+            /* Sin bordes */
+            border-radius: 15px;
+            /* Bordes redondeados */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            /* Sombra suave */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+            /* Efecto de zoom al pasar el mouse */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            /* Aumentar la sombra */
+        }
+
+        /* Imagen de la tarjeta */
+        .project-img {
+            border-radius: 15px 15px 0 0;
+            /* Bordes redondeados en la parte superior */
+            height: 200px;
+            /* Altura fija para las imágenes */
+            object-fit: cover;
+            /* Ajuste de la imagen */
+        }
+
+        /* Título del proyecto */
+        .project-card .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* Descripción */
+        .project-card .card-text {
+            font-size: 1rem;
+            color: #b0b0b0;
+            /* Texto más claro */
+        }
+
+        /* Botón personalizado */
+        .project-btn {
+            background-color: #007bff;
+            /* Color primario */
+            border-color: #007bff;
+            /* Borde del mismo color */
+            border-radius: 10px;
+            /* Bordes redondeados */
+            transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+
+        .project-btn:hover {
+            background-color: #0056b3;
+            /* Color más oscuro al pasar el mouse */
+            border-color: #0056b3;
+            /* Cambiar borde al mismo tiempo */
+        }
+
+        #heroCarousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .carousel-inner img {
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .carousel-caption {
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .carousel-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .carousel-subtitle {
+            font-size: 1.25rem;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 5%;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-size: 50%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        /* CSS para el carrusel */
+        .carousel-inner {
+            width: 100%;
+            height: 500px;
+            /* Ajusta la altura según tus necesidades */
+        }
+
+        .carousel-item {
+            height: 100%;
+        }
+
+        .carousel-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ajusta la imagen para cubrir el área sin distorsión */
+        }
+
+        /* CSS para los elementos del proyecto */
+        .project-img {
+            width: 100%;
+            height: 200px;
+            /* Ajusta la altura según tus necesidades */
+            object-fit: cover;
+            /* Ajusta la imagen para cubrir el área sin distorsión */
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{% url 'index' %}">Proyectos</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 {% if user.is_authenticated %}
@@ -59,11 +205,12 @@
 
     {% if messages %}
     {% for message in messages %}
-    <div {% if message.tags == 'error' %}class="alert alert-danger" {% else %} class="alert alert-{{message.tags}}"{% endif %} role="alert">
+    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" role="alert">
         <span class="{{ message.tags }}">{{ message }}</span>
     </div>
     {% endfor %}
     {% endif %}
+
 
 
     <!-- Main Content -->
@@ -84,4 +231,5 @@
     <!-- Custom JS -->
     <!--<script src="{% static 'js/main.js' %}"></script>-->
 </body>
+
 </html>

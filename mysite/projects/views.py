@@ -21,7 +21,8 @@ class RegisterView(View):
             messages.success(request, 'User creado exitosamente.')
             return redirect('index')
         print(form.errors.as_json())
-        messages.error(request, f'Por favor, corrija los errores en el formulario:\n {json.loads(form.errors.as_json())['password2'][0]['message']}')
+        password2_error_msg = json.loads(form.errors.as_json())['password2'][0]['message']
+        messages.error(request, f'Por favor, corrija los errores en el formulario:\n {password2_error_msg}')
         return render(request, 'register.html', {'form': form})
 
 class LoginView(View):
@@ -62,8 +63,8 @@ class CreateProject(View):
                 proyecto = form.save(commit=False)
                 print(proyecto)
                 proyecto.userID = request.user
-                proyecto.image_url = f'http://127.0.0.1:8000/media/images/{str(proyecto.image).replace(' ','_')}'
-                proyecto.video_url = f'http://127.0.0.1:8000/media/videos/{str(proyecto.image).replace(' ','_')}'
+                proyecto.image_url = 'http://127.0.0.1:8000/media/images/{}'.format(str(proyecto.image).replace(' ', '_'))
+                proyecto.video_url = 'http://127.0.0.1:8000/media/videos/{}'.format(str(proyecto.image).replace(' ','_'))
                 proyecto.save()
                 messages.success(request, 'Proyecto creado exitosamente.')
             else:

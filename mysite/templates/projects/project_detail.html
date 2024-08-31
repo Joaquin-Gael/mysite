@@ -1,0 +1,41 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}Detalles del Proyecto{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            {% if project.image %}
+            <img src="{{ project.image.url }}" class="img-fluid" alt="{{ project.title }}">
+            {% elif project.image_url %}
+            <img src="{{ project.image_url }}" class="img-fluid" alt="{{ project.title }}">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h1>{{ project.title }}</h1>
+            <h3>{{ project.subtitle }}</h3>
+            <p><strong>Descripción:</strong> {{ project.description }}</p>
+            <p><strong>Objetivo:</strong> {{ project.objective }}</p>
+            <p><strong>Metas:</strong> {{ project.goals }}</p>
+            <p><strong>Contenido:</strong> {{ project.content }}</p>
+            <p><strong>Profesores:</strong> {{ project.teachers }}</p>
+            <p><strong>Curso:</strong> {{ project.course }}</p>
+            <p><strong>Estudiantes:</strong> {{ project.students }}</p>
+            <p><strong>Materia:</strong> {{ project.subject }}</p>
+            {% if project.video %}
+            <video controls class="w-100">
+                <source src="{{ project.video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            {% elif project.video_url %}
+            <video controls class="w-100">
+                <source src="{{ project.video_url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            {% endif %}
+            <a href="{% url 'index' %}" class="btn btn-primary mt-3">Volver a la lista de proyectos</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

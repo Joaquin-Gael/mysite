@@ -5,25 +5,38 @@
 {% block title %}Listado de Proyectos{% endblock %}
 
 {% block content %}
+<!-- Search Bar -->
+<input type="text" id="searchInput" placeholder="Buscar proyectos..." class="form-control mb-4">
+
+<!-- Project List Section -->
+<h1 class="text-center mb-4">Proyectos</h1>
+
 <!-- Hero Section: Slider -->
 <div id="heroCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+    <!-- Carousel indicators -->
     <div class="carousel-indicators">
         {% for i in projects %}
-        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %} aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ forloop.counter0 }}" 
+        {% if forloop.first %}class="active" {% endif %} aria-current="true"
+            aria-label="Slide {{ forloop.counter }}"></button>
         {% endfor %}
     </div>
+
+    <!-- Carousel inner -->
     <div class="carousel-inner">
         {% for project in projects %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img src="{{ project.large_image_url }}" class="d-block w-100" alt="{{ project.title }}">
+            <img src="{{ project.large_image_url }}" class="d-block w-100 carousel-img" alt="{{ project.title }}">
             <div class="carousel-caption d-none d-md-block">
-                <h5>{{ project.title }}</h5>
-                <p>{{ project.subtitle }}</p>
+                <h5 class="carousel-title">{{ project.title }}</h5>
+                <p class="carousel-subtitle">{{ project.subtitle }}</p>
                 <a href="{% url 'project_detail' project.id %}" class="btn btn-primary">Ver más</a>
             </div>
         </div>
         {% endfor %}
     </div>
+
+    <!-- Carousel controls -->
     <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Anterior</span>
@@ -34,20 +47,16 @@
     </button>
 </div>
 
-<!-- Search Bar -->
-<input type="text" id="searchInput" placeholder="Buscar proyectos..." class="form-control mb-4">
-
-<!-- Project List Section -->
-<h1 class="text-center mb-4">Proyectos</h1>
+<!-- Project List -->
 <div class="row row-cols-1 row-cols-md-3 g-4" id="projectList">
     {% for project in projects %}
     <div class="col project-item">
-        <div class="card h-100">
-            <img src="{{ project.image_url }}" class="card-img-top" alt="Imagen del Proyecto">
+        <div class="card project-card">
+            <img src="{{ project.large_image_url }}" class="card-img-top project-img" alt="{{ project.title }}">
             <div class="card-body">
                 <h5 class="card-title">{{ project.title }}</h5>
                 <p class="card-text">{{ project.subtitle }}</p>
-                <a href="{% url 'project_detail' project.id %}" class="btn btn-primary">Ver más</a>
+                <a href="{% url 'project_detail' project.id %}" class="btn btn-primary project-btn">Ver Detalles</a>
             </div>
         </div>
     </div>
