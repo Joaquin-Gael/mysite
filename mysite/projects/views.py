@@ -142,6 +142,17 @@ class CreateMedia(View):
 
 class MediaGalery(View):
     def get(self, request):
-        images = MediaContent.objects.filter(content__icontains=['.png','.jpg','.jpeg'])
+        images = MediaContent.objects.filter(content__icontains='.png')
         videos = MediaContent.objects.filter(content__icontains='.mp4')
+        print(images)
         return render(request, 'projects/media_gallery.html', {'images': images, 'videos': videos})
+
+class DeleteMedia(DeleteView):
+    model = MediaContent
+    success_url = reverse_lazy('media_galery')
+    template_name = 'projects/media_confirm_delete.html'
+
+    def get_object(self, queryset=None):
+        """ Devuelve el objeto que se eliminará. """
+        obj = super().get_object(queryset)
+        return obj
