@@ -11,4 +11,6 @@ urlpatterns = [
     path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('media/create/', views.CreateMedia.as_view(), name='media_create'),
+    path('media/galery/', views.MediaGalery.as_view(), name='media_galery'),
 ]

@@ -49,7 +49,11 @@ class IndexView(View):
     def get(self, request):
         projects = Project.objects.all()
         return render(request, 'projects/index.html', {'projects': projects})
-        #return render(request, 'projects/index.html')
+    
+    def post(self, request):
+        projects = Project.objects.filter(title__icontains=request.POST['search_query'])
+        print(projects)
+        return render(request, 'projects/index.html', {'projects': projects})
 
 class CreateProject(View):
     def get(self, request):
@@ -79,8 +83,8 @@ class CreateProject(View):
 
 class PanelUser(View):
     def get(self, request):
-        #if not request.user.is_authenticated:
-        #    return redirect('index')
+        if not request.user.is_authenticated:
+            return redirect('index')
         try:
             user = User.objects.get(userID=request.user.userID)
             proyectos = user.get_proyectos() 
@@ -120,3 +124,24 @@ class ProjectDetail(View):
     def get(self, request, project_id):
         project = Project.objects.get(id=project_id)
         return render(request, 'projects/project_detail.html', {'project': project})
+
+class CreateMedia(View):
+    def get(self, request):
+        form = MediaContentForm()
+        return render(request, 'projects/upload_media.html',{'form':form})
+    
+    def post(self, request):
+        form = MediaContentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Contenido creado exitosamente.')
+            return redirect('index')
+        else:
+            messages.error(request, 'Por favor, corrija los errores en el formulario.')
+        return render(request, 'projects/upload_media.html',{'form':form})
+
+class MediaGalery(View):
+    def get(self, request):
+        images = MediaContent.objects.filter(content__icontains=['.png','.jpg','.jpeg'])
+        videos = MediaContent.objects.filter(content__icontains='.mp4')
+        return render(request, 'projects/media_gallery.html', {'images': images, 'videos': videos})

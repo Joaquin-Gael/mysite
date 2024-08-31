@@ -1,0 +1,14 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}Subir Contenido{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="display-4 text-center mb-5">Subir Contenido Multimedia</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Subir</button>
+    </form>
+</div>
+{% endblock %}

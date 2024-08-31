@@ -27,8 +27,8 @@ class User(AbstractUser):
         logout(request)
     
     @classmethod
-    def authenticate(cls, request, dni=None, password=None):
-        user = cls.objects.filter(dni=dni).first()
+    def authenticate(cls, request, username=None, password=None):
+        user = cls.objects.filter(name=username).first()
         if user.check_password(password):
             user.set_login(request)
             return user
@@ -70,3 +70,13 @@ class Project(models.Model):
     @property
     def large_image_url(self):
         return self.image_url.replace('small', 'large')
+
+class MediaContent(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(null=True)
+    content = models.FileField(upload_to='content/', default='800x600.png', null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title

@@ -1,5 +1,5 @@
 from django import forms
-from .models import (Project, User)
+from .models import (Project, User, MediaContent)
 from django.contrib.auth.forms import UserCreationForm
 
 class ProjectForm(forms.ModelForm):
@@ -38,4 +38,15 @@ class CustomUserCreationForm(UserCreationForm):
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Correo electrónico'}),
             'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Contraseña'}),
             'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirmar contraseña'}),
+        }
+
+
+class MediaContentForm(forms.ModelForm):
+    class Meta:
+        model = MediaContent
+        fields = ['title', 'description', 'content']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Título del contenido'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Descripción del contenido...'}),
+            'content': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }

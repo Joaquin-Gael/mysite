@@ -6,7 +6,18 @@
 
 {% block content %}
 <!-- Search Bar -->
-<input type="text" id="searchInput" placeholder="Buscar proyectos..." class="form-control mb-4">
+<div class="container mt-5">
+    <form method="post" class="d-flex align-items-center">
+        {% csrf_token %}
+        <div class="input-group mb-4">
+            <input type="text" id="searchInput" name="search_query" placeholder="Buscar proyectos..."
+                class="form-control search-input">
+            <button type="submit" class="btn btn-primary search-button">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </form>
+</div>
 
 <!-- Project List Section -->
 <h1 class="text-center mb-4">Proyectos</h1>
@@ -24,6 +35,8 @@
 
     <!-- Carousel inner -->
     <div class="carousel-inner">
+        {% with has_projects=projects|length %}
+        {% if has_projects %}
         {% for project in projects %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
             <img src="{{ project.large_image_url }}" class="d-block w-100 carousel-img" alt="{{ project.title }}">
@@ -34,6 +47,17 @@
             </div>
         </div>
         {% endfor %}
+        {% else %}
+        <div class="carousel-item active">
+            <img src="{% static 'images/800x600.png' %}" class="d-block w-100 carousel-img" alt="404">
+            <div class="carousel-caption d-none d-md-block">
+                <h5 class="carousel-title">404 Error</h5>
+                <p class="carousel-subtitle">No Existe Contenido</p>
+                <a href="{% url 'index' %}" class="btn btn-primary">Regresar</a>
+            </div>
+        </div>
+        {% endif %}
+        {% endwith %}
     </div>
 
     <!-- Carousel controls -->
@@ -49,6 +73,8 @@
 
 <!-- Project List -->
 <div class="row row-cols-1 row-cols-md-3 g-4" id="projectList">
+    {% with has_projects=projects|length %}
+    {% if has_projects %}
     {% for project in projects %}
     <div class="col project-item">
         <div class="card project-card">
@@ -61,6 +87,19 @@
         </div>
     </div>
     {% endfor %}
+    {% else %}
+    <div class="col">
+        <div class="card project-card">
+            <img src="{% static 'images/800x600.png' %}" class="card-img-top project-img" alt="404">
+            <div class="card-body">
+                <h5 class="card-title">404 Error</h5>
+                <p class="card-text">No Existe Contenido</p>
+                <a href="{% url 'index' %}" class="btn btn-primary project-btn">Regresar</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endwith %}
 </div>
 {% endblock %}
 

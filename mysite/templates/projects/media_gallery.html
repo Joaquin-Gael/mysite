@@ -1,0 +1,158 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}Galería de Medios{% endblock %}
+
+{% block styles %}
+<style>
+    /* Estilos para el campo de búsqueda */
+    .search-input {
+        border-radius: 0.375rem 0 0 0.375rem;
+        /* Bordes redondeados solo a la izquierda */
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        /* Sombra ligera */
+        transition: box-shadow 0.3s ease;
+        /* Transición para el efecto de enfoque */
+    }
+
+    .search-input:focus {
+        box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+        /* Sombra más intensa al enfocar */
+        outline: none;
+        /* Eliminar el borde de enfoque predeterminado */
+    }
+
+    /* Estilos para el botón de búsqueda */
+    .search-button {
+        border-radius: 0 0.375rem 0.375rem 0;
+        /* Bordes redondeados solo a la derecha */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* Transición para la animación */
+        background-color: #007bff;
+        /* Color de fondo predeterminado */
+        border: none;
+        /* Eliminar el borde predeterminado */
+    }
+
+    .search-button:hover {
+        background-color: #0056b3;
+        /* Color de fondo al pasar el cursor */
+        box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+        /* Sombra más intensa al pasar el cursor */
+    }
+
+    .search-button:active {
+        transform: scale(0.95);
+        /* Efecto de escala al hacer clic */
+    }
+
+    /* Icono de búsqueda dentro del botón */
+    .search-button i {
+        font-size: 1.25rem;
+        /* Tamaño del icono */
+        color: #fff;
+        /* Color del icono */
+    }
+
+    /* Contenedor de video con padding y estilo */
+    .video-container {
+        position: relative;
+        padding-top: 56.25%;
+        /* Mantiene la relación de aspecto 16:9 */
+        overflow: hidden;
+        background: #000;
+        /* Fondo negro para videos sin imagen */
+        border-radius: 0.375rem;
+        /* Bordes redondeados */
+    }
+
+    .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0.375rem;
+        /* Bordes redondeados */
+    }
+
+    /* Estilos de la tarjeta de imagen */
+    .card {
+        border: none;
+        border-radius: 0.375rem;
+        /* Bordes redondeados */
+        overflow: hidden;
+        /* Asegura que las imágenes no se salgan de los bordes */
+    }
+
+    .card-img-top {
+        object-fit: cover;
+        /* Mantiene la proporción de la imagen */
+        height: 200px;
+        /* Ajusta la altura de la imagen */
+    }
+
+    /* Estilos para los títulos de las secciones */
+    .display-5 {
+        font-size: 1.75rem;
+        /* Tamaño de fuente para los títulos de sección */
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem;
+        /* Espaciado inferior para los títulos */
+    }
+
+    /* Estilos para el texto de los videos */
+    .video-container p {
+        color: #fff;
+        /* Color del texto de los videos */
+        text-align: center;
+        /* Centra el texto */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="display-4 text-center mb-5">Galería de Medios</h1>
+
+    <!-- Sección de Imágenes -->
+    <section id="images" class="mb-5">
+        <h2 class="display-5 mb-4">Imágenes</h2>
+        <div class="row">
+            {% for image in images %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <img src="{{ image.content.url }}" class="card-img-top" alt="{{ image.title }}">
+                    <div class="card-body">
+                        <p class="card-text">{{ image.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-muted">No hay imágenes disponibles.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Sección de Videos -->
+    <section id="videos">
+        <h2 class="display-5 mb-4">Videos</h2>
+        <div class="row">
+            {% for video in videos %}
+            <div class="col-md-6 mb-4">
+                <div class="video-container">
+                    <video controls class="w-100 rounded shadow-sm">
+                        <source src="{{ video.content.url }}" type="video/mp4">
+                        Tu navegador no soporta la etiqueta de video.
+                    </video>
+                    <p class="mt-2">{{ video.description }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-muted">No hay videos disponibles.</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}
