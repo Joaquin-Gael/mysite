@@ -1,0 +1,49 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %}
+Página no encontrada
+{% endblock %}
+
+{% block styles %}
+<style>
+    .error-container {
+        text-align: center;
+        padding: 50px;
+    }
+
+    .error-container img {
+        max-width: 300px;
+        margin-bottom: 20px;
+    }
+
+    .error-container h1 {
+        font-size: 5rem;
+        margin-bottom: 20px;
+    }
+
+    .error-container p {
+        font-size: 1.25rem;
+        margin-bottom: 20px;
+    }
+
+    .error-container a {
+        font-size: 1rem;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .error-container a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container error-container">
+    <img src="{% static 'images/working-illustration.svg' %}" alt="Ilustración de personas trabajando">
+    <h1>404</h1>
+    <p>La página que estás buscando no existe, ha sido cambiada o está en construcción.</p>
+    <p><a href="{% url 'index' %}">Regresar a la página principal</a></p>
+</div>
+{% endblock %}

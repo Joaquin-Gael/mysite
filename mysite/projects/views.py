@@ -88,9 +88,10 @@ class PanelUser(View):
         try:
             user = User.objects.get(userID=request.user.userID)
             proyectos = user.get_proyectos() 
-            return render(request, 'projects/panel.html', {'proyectos': proyectos})
+            medias = MediaContent.objects.all()
+            return render(request, 'projects/panel.html', {'proyectos': proyectos, 'medias': medias})
         except Exception as err:
-            return render(request, 'projects/panel.html', {'proyectos': []})
+            return render(request, 'projects/panel.html', {'proyectos': [], 'medias': []})
 
     def post(self, request):
         _json = json.loads(request.body)

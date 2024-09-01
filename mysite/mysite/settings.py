@@ -40,7 +40,7 @@ if DEBUG:
     CSRF_TRUSTED_ORIGINS = [
         'http://localhost:8000',
         'http://127.0.0.1:8000',
-        'https://8000-idx-mysite-1725117947006.cluster-uf6urqn4lned4spwk4xorq6bpo.cloudworkstations.dev',  # Add other origins as needed
+        'https://8000-idx-mysite-1725146459666.cluster-kc2r6y3mtba5mswcmol45orivs.cloudworkstations.dev',  # Add other origins as needed
     ]
 else:
     # For production, make sure to set specific trusted origins
