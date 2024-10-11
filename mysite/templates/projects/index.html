@@ -1,0 +1,89 @@
+{% extends 'layouts/main.html' %}
+
+{% load static %}
+
+{% block title %}Listado de Proyectos{% endblock %}
+
+{% block content %}
+<!-- Search Bar -->
+<div class="container mt-5">
+    <form method="post" class="d-flex align-items-center">
+        {% csrf_token %}
+        <div class="input-group mb-4">
+            <input type="text" id="searchInput" name="search_query" placeholder="Buscar proyectos..."
+                class="form-control search-input">
+            <button type="submit" class="btn btn-primary search-button">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Condicional para mostrar contenido si hay proyectos -->
+{% if projects %}
+    <!-- Project List Section -->
+    <h1 class="text-center mb-4">Proyectos</h1>
+
+    <!-- Hero Section: Slider -->
+    <div id="heroCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+        <!-- Carousel indicators -->
+        <div class="carousel-indicators">
+            {% for i in projects %}
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ forloop.counter0 }}" 
+            {% if forloop.first %}class="active" {% endif %} aria-current="true"
+                aria-label="Slide {{ forloop.counter }}"></button>
+            {% endfor %}
+        </div>
+
+        <!-- Carousel inner -->
+        <div class="carousel-inner">
+            {% for project in projects %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ project.large_image_url }}" class="d-block w-100 carousel-img" alt="{{ project.title }}">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 class="carousel-title">{{ project.title }}</h5>
+                    <p class="carousel-subtitle">{{ project.subtitle }}</p>
+                    <a href="{% url 'project_detail' project.id %}" class="btn btn-primary">Ver más</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Carousel controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+
+    <!-- Project List -->
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="projectList">
+        {% for project in projects %}
+        <div class="col project-item">
+            <div class="card project-card">
+                <img src="{{ project.large_image_url }}" class="card-img-top project-img" alt="{{ project.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ project.title }}</h5>
+                    <p class="card-text">{{ project.subtitle }}</p>
+                    <a href="{% url 'project_detail' project.id %}" class="btn btn-primary project-btn">Ver Detalles</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 50vh; margin-top: 20px;">
+        <img src="{% static 'images/404proyectos.png' %}" class="img-fluid" alt="404" style="max-height: 100%; max-width: 90%; object-fit: contain;">
+        <h5 class="card-title text-muted" style="margin-top: 20px; font-size: 1.25rem;">No hay proyectos para mostrar...</h5>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/index.js' %}"></script>
+{% endblock %}

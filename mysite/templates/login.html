@@ -1,0 +1,33 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}Inicio de Sesión{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Iniciar Sesión</h1>
+
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">Nombre de usuario</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+    </form>
+
+    <div class="text-center mt-3">
+        <p class="mb-2">¿No tienes una cuenta? </p>
+        <a href="{% url 'register' %}">Registrate</a>
+    </div>
+</div>
+{% endblock %}

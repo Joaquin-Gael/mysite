@@ -1,0 +1,33 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}Registro de Usuario{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Registro de Usuario</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Nombre de usuario</label>
+            {{ form.username }}
+        </div>
+        <div class="mb-3">
+            <label for="id_name" class="form-label">Nombre completo</label>
+            {{ form.name }}
+        </div>
+        <div class="mb-3">
+            <label for="id_email" class="form-label">Correo electrónico</label>
+            {{ form.email }}
+        </div>
+        <div class="mb-3">
+            <label for="id_password1" class="form-label">Contraseña</label>
+            {{ form.password1 }}
+        </div>
+        <div class="mb-3">
+            <label for="id_password2" class="form-label">Confirmar contraseña</label>
+            {{ form.password2 }}
+        </div>
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+    </form>
+</div>
+{% endblock %}

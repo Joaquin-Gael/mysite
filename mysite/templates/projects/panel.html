@@ -1,0 +1,179 @@
+{% extends 'layouts/main.html' %}
+{% load static %}
+
+{% block title %}
+- Panel
+{% endblock title %}
+
+{% block styles %}
+<style>
+    /* Custom styles to hide buttons until hover */
+    .list-group-item {
+        position: relative;
+        transition: background-color 0.3s;
+    }
+
+    .list-group-item .btn {
+        visibility: hidden;
+    }
+
+    .list-group-item:hover .btn {
+        visibility: visible;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h4 class="mb-4 text-center">Panel de Usuario</h4>
+    <div id="response"></div>
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Sidebar -->
+            <div id="sidebar" class="d-flex flex-column align-items-start">
+                <h5 class="mb-3">Opciones</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'index' %}">
+                            <i class="bi bi-house-door"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'project_create' %}">
+                            <i class="bi bi-plus-circle"></i> Agregar Proyecto
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">
+                            <i class="bi bi-list"></i> Lista de Proyectos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'media_galery' %}">
+                            <i class="bi bi-images"></i> Lista de Media
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/nose">
+                            <i class="bi bi-gear"></i> Configuración
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div id="panelUser" class="card shadow-sm">
+                <ul class="nav nav-tabs" id="panelTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="proyectosTab" data-bs-toggle="tab"
+                            data-bs-target="#proyectosContent" type="button" role="tab" aria-controls="proyectosContent"
+                            aria-selected="true">Proyectos</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="mediaTab" data-bs-toggle="tab" data-bs-target="#mediaContent"
+                            type="button" role="tab" aria-controls="mediaContent" aria-selected="false">Media</button>
+                    </li>
+                </ul>
+                <div class="tab-content p-3" id="contentPanel">
+                    <!-- Tab Proyectos -->
+                    <div class="tab-pane fade show active" id="proyectosContent" role="tabpanel"
+                        aria-labelledby="proyectosTab">
+                        <div class="list-group">
+                            {% for proyecto in proyectos %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5>{{ proyecto.title }}</h5>
+                                    <p>{{ proyecto.subtitle }}</p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <!-- Botón para editar el proyecto -->
+                                    <button class="btn btn-sm btn-outline-primary me-2"
+                                        onclick="location.href='{% url 'project_update' proyecto.id %}'">Editar</button>
+                                    <!-- Botón para borrar el proyecto -->
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteProjectModal{{ proyecto.id }}">Borrar</button>
+                                </div>
+                            </div>
+
+                            <!-- Modal de confirmación para borrar -->
+                            <div class="modal fade" id="deleteProjectModal{{ proyecto.id }}" tabindex="-1"
+                                aria-labelledby="deleteProjectModalLabel{{ proyecto.id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteProjectModalLabel{{ proyecto.id }}">
+                                                Confirmar Borrado
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Estás seguro de que quieres borrar el proyecto "{{ proyecto.title }}"?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cancelar</button>
+                                            <!-- Botón que redirige a la página de confirmación de borrado -->
+                                            <button type="button" class="btn btn-danger"
+                                                onclick="location.href='{% url 'project_delete' proyecto.id %}'">Continuar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Tab Media -->
+                    <div class="tab-pane fade" id="mediaContent" role="tabpanel" aria-labelledby="mediaTab">
+                        <div class="d-flex justify-content-end mb-3">
+                            <button class="btn btn-sm btn-success"
+                                onclick="location.href='{% url 'media_create' %}'">Agregar Media</button>
+                        </div>
+                        <div class="list-group">
+                            {% for media in medias %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5>{{ media.title }}</h5>
+                                    <p>{{ media.description }}</p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <!-- Botón para borrar media -->
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteMediaModal{{ media.id }}">Borrar</button>
+                                </div>
+                            </div>
+
+                            <!-- Modal de confirmación para borrar media -->
+                            <div class="modal fade" id="deleteMediaModal{{ media.id }}" tabindex="-1"
+                                aria-labelledby="deleteMediaModalLabel{{ media.id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteMediaModalLabel{{ media.id }}">Confirmar
+                                                Borrado</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Estás seguro de que quieres borrar el media "{{ media.title }}"?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="button" class="btn btn-danger"
+                                                onclick="location.href='{% url 'media_delete' media.id %}'">Borrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

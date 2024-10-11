@@ -1,0 +1,75 @@
+{% extends 'layouts/main.html' %}
+
+{% load static %}
+
+{% block title %}Crear Proyecto{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <h1 class="text-center mb-3">Crear Proyecto</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_title" class="form-label">Título del Proyecto</label>
+                {{ form.title }}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_image" class="form-label">Subir Imagen</label>
+                {{ form.image }}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_image_url" class="form-label">URL de la Imagen</label>
+                {{ form.image_url }}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_subtitle" class="form-label">Subtítulo del Proyecto</label>
+                {{ form.subtitle }}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_video" class="form-label">Subir Video</label>
+                {{ form.video }}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_video_url" class="form-label">URL del Video</label>
+                {{ form.video_url }}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_description" class="form-label">Descripción</label>
+                {{ form.description }}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_objective" class="form-label">Objetivo</label>
+                {{ form.objective }}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_goals" class="form-label">Metas</label>
+                {{ form.goals }}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_content" class="form-label">Contenido</label>
+                {{ form.content }}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_teachers" class="form-label">Profesores</label>
+                {{ form.teachers }}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_course" class="form-label">Curso</label>
+                {{ form.course }}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_students" class="form-label">Estudiantes</label>
+                {{ form.students }}
+            </div>
+            <div class="col-sm-12 col-md-4 mb-1">
+                <label for="id_subject" class="form-label">Asignatura</label>
+                {{ form.subject }}
+            </div>
+        </div>
+        <div class="text-center mt-2">
+            <button type="submit" class="btn btn-primary">Guardar Proyecto</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

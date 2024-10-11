@@ -1,0 +1,174 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}Detalles del Proyecto{% endblock %}
+
+{% block styles %}
+<style>
+    /* Estilo de la imagen del proyecto */
+    img.img-fluid {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    img.img-fluid:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Estilo de los videos */
+    video {
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    video:hover {
+        border-color: #007bff;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Estilo del botón */
+    .btn-custom {
+        background-color: #007bff;
+        border-color: #007bff;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+        transform: translateY(-2px);
+    }
+
+    /* Estilo de los títulos */
+    .title-custom {
+        font-weight: 700;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .subtitle-custom {
+        font-weight: 500;
+        color: #6c757d;
+    }
+
+    /* Estilo de las secciones de detalles */
+    .details-card {
+        background-color: #f8f9fa;
+        border-left: 4px solid #007bff;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .details-card:hover {
+        background-color: #e9ecef;
+        border-left-color: #0056b3;
+    }
+
+    /* Sombra personalizada */
+    .shadow-custom {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Borde personalizado */
+    .border-custom {
+        border: 2px solid rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo de las columnas */
+    @media (min-width: 992px) {
+        .row>[class*='col-'] {
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    /* Contenedor de la imagen que sigue al usuario al hacer scroll */
+    .sticky-image-container {
+        position: relative;
+    }
+
+    .sticky-image {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Solo aplica en dispositivos con ancho mínimo de 768px (tabletas y PC) */
+    @media (min-width: 768px) {
+        .sticky-image-container {
+            /* Establece un alto mínimo para asegurar que el sticky funcione correctamente */
+            min-height: 600px;
+            /* Ajusta este valor según sea necesario */
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Imagen del proyecto -->
+        <div class="col-lg-6 mb-4 sticky-image-container">
+            {% if project.image %}
+            <img src="{{ project.image_url }}" class="img-fluid rounded shadow-custom sticky-image"
+                alt="{{ project.title }}">
+            {% elif project.image_url %}
+            <img src="{{ project.image_url }}" class="img-fluid rounded shadow-custom sticky-image"
+                alt="{{ project.title }}">
+            {% endif %}
+        </div>
+        <!-- Detalles del proyecto -->
+        <div class="col-lg-6 mb-4">
+            <h1 class="display-4 mb-3 text-primary title-custom">{{ project.title }}</h1>
+            <h3 class="text-muted mb-4 subtitle-custom">{{ project.subtitle }}</h3>
+
+            <div class="details-card mb-4 p-3 rounded shadow-custom">
+                <h5 class="section-title">Descripción:</h5>
+                <p>{{ project.description }}</p>
+            </div>
+            <div class="details-card mb-4 p-3 rounded shadow-custom">
+                <h5 class="section-title">Objetivo:</h5>
+                <p>{{ project.objective }}</p>
+            </div>
+            <div class="details-card mb-4 p-3 rounded shadow-custom">
+                <h5 class="section-title">Metas:</h5>
+                <p>{{ project.goals }}</p>
+            </div>
+            <div class="details-card mb-4 p-3 rounded shadow-custom">
+                <h5 class="section-title">Contenido:</h5>
+                <p>{{ project.content }}</p>
+            </div>
+            <div class="details-card mb-4 p-3 rounded shadow-custom">
+                <h5 class="section-title">Profesores:</h5>
+                <p>{{ project.teachers }}</p>
+            </div>
+            <div class="details-card mb-4 p-3 rounded shadow-custom">
+                <h5 class="section-title">Curso:</h5>
+                <p>{{ project.course }}</p>
+            </div>
+            <div class="details-card mb-4 p-3 rounded shadow-custom">
+                <h5 class="section-title">Estudiantes:</h5>
+                <p>{{ project.students }}</p>
+            </div>
+            <div class="details-card mb-4 p-3 rounded shadow-custom">
+                <h5 class="section-title">Materia:</h5>
+                <p>{{ project.subject }}</p>
+            </div>
+
+            {% if project.video %}
+            <div class="mb-4">
+                <video controls class="w-100 rounded shadow-custom border-custom">
+                    <source src="{{ project.video.url }}" type="video/mp4">
+                    Tu navegador no soporta la etiqueta de video.
+                </video>
+            </div>
+            {% elif project.video_url %}
+            <div class="mb-4">
+                <video controls class="w-100 rounded shadow-custom border-custom">
+                    <source src="{{ project.video_url }}" type="video/mp4">
+                    Tu navegador no soporta la etiqueta de video.
+                </video>
+            </div>
+            {% endif %}
+
+            <a href="{% url 'index' %}" class="btn btn-primary btn-custom mt-3">Volver a la lista de proyectos</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
